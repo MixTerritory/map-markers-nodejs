@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Google Map Markers</title>
+        <link rel="stylesheet" href="/stylesheets/style.css" type="text/css" />
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="/javascripts/main.js"></script>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div id="map" class="map-block"></div>
+            <div class="tools-wrapper">
+                <div class="map-tools">
+                    <form action="/markers/" method="post">
+                        <input id="lat" type="hidden" name="lat" value=""/>
+                        <input id="lon" type="hidden" name="lon" value=""/>
+                        <div class="map-filed"><input id="new-marker-latlng" class="new-marker-latlng" type="text" name="add-marker" value="" readonly /></div>
+                        <div class="map-button"><input type="button" name="add-marker-btn" onclick= "addMarker();" value="Add Marker" /></div>
+                    </form>
+                </div>
+                <div class="map-tools">
+                    <form action="/markers/">
+                        <div class="map-filed">
+                            <select  id="markersList" class="search-marker" name="search-marker">
+                                <option value="0">All markers</option>
+                            </select>
+                        </div>
+                        <div class="map-button"><input type="button" onclick="searchMarkerById();" name="search-marker-btn" value="Search Marker" /></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script>
+            $( document ).ready(function() {
+                mainMarkers();
+            });
+        </script>
+    </body>
+</html>

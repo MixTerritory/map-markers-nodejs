@@ -1,0 +1,51 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.wrapper {
+    margin: 0 auto;
+    width: 700px;
+}
+
+.map-block
+{
+    width: 700px;
+    height: 400px;
+}
+
+.map-tools {
+    margin: 10px 10px;
+    float:left;
+}
+
+.map-filed {
+    float:left;
+}
+
+.map-button {
+    float:left;
+}
+
+.tools-wrapper{
+    overflow:hidden;
+}
+
+.map-button input {
+    width: 100px;
+}
+
+.new-marker-latlng{
+    width:260px;
+    margin: 2px 4px 0 0;
+}
+
+.search-marker{
+    width: 120px;
+    height: 22px;
+    margin: 2px 4px 0 22px;
+}

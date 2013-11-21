@@ -74,6 +74,10 @@ function addMarker() {
 
 function searchMarkerById(){
     var markerId = $("#markersList option:selected").val();
+    if(tempMarker.length > 0){
+        tempMarker[0].setMap(null);
+        tempMarker = [];
+    }
     if (markerId != 0){
         $.ajax({
             dataType: "json",

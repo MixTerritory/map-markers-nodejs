@@ -6,8 +6,11 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "3.4.4",
+    "express": "3.x",
     "ejs": "*",
-    "mongodb": "*"
+    "mongodb": "*",
+    "mocha": "*",
+    "mocha-mongo": "*",
+    "pow-mongodb-fixtures":"*"
   }
 }

@@ -3,6 +3,8 @@ function MarkersProvider(db) {
     this.db = db;
 }
 
+var func = function(){};
+
 MarkersProvider.prototype.getCollection = function (success, fail) {
     this.db.collection('markers', function (error, collection) {
         if (error) {
@@ -13,12 +15,13 @@ MarkersProvider.prototype.getCollection = function (success, fail) {
 };
 
 MarkersProvider.prototype.findById = function(id ,success, fail) {
-    var id = req.params.id;
     success = (typeof success === 'function' ? success : func);
     fail = (typeof fail === 'function' ? fail : func);
 
+    id = require('mongodb').ObjectID.createFromHexString(id);
+
     this.getCollection(function (collection) {
-        collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
+        collection.findOne({'_id': id}, function(err, item) {
             success(item);
         });
     }, fail);

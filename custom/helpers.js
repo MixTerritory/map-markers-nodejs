@@ -1,6 +1,6 @@
 
 exports.sendResponse = function(data, response) {
-    exports.log(data);
+    console.log(data);
     response.send(200, { success: true, result: data });
 };
 

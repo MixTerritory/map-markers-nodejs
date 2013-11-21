@@ -1,15 +1,32 @@
-
 /**
  * Module dependencies.
  */
 
 var express = require('express');
-var routes = require('./routes');
-var markers = require('./routes/markers');
+var markers = require('./custom/markers');
 var http = require('http');
 var path = require('path');
 
 var app = express();
+
+var mongo = require('mongodb');
+var sampleData = require('./custom/populateMarkers');
+var Server = mongo.Server;
+var Db = mongo.Db;
+var server = new Server('localhost', 27017, {auto_reconnect: true});
+db = new Db('markersdb', server);
+db.open(function(err, db) {
+    if (err) {
+        console.log("Failed to connect to MongoDB database");
+        throw (err);
+    }
+    db.authenticate("root", "", function (err, replies) {
+        console.log("Connected to Mongo database - markersdb");
+        sampleData.populateMarkers();
+    });
+});
+
+
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -29,6 +46,7 @@ app.get('/', function (req,res){
     res.render("index.ejs", {layout: false});
 });
 
+//markers API routes
 app.get('/markers', markers.findAll);
 app.get('/markers/:id', markers.findById);
 app.post('/markers', markers.addMarker);

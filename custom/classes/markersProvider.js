@@ -18,7 +18,9 @@ MarkersProvider.prototype.findById = function(id ,success, fail) {
     success = (typeof success === 'function' ? success : func);
     fail = (typeof fail === 'function' ? fail : func);
 
-    id = require('mongodb').ObjectID.createFromHexString(id);
+    if(id.length === 24) {
+        id = require('mongodb').ObjectID.createFromHexString(id);
+    }
 
     this.getCollection(function (collection) {
         collection.findOne({'_id': id}, function(err, item) {

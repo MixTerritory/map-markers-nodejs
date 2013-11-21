@@ -1,4 +1,5 @@
 var assert = require('assert');
+var helpers = require('./../custom/helpers')
 var mp = require('./../custom/classes/markersProvider');
 
 var mongo = require('mocha-mongo')('mongodb://localhost/markersdb');
@@ -14,7 +15,7 @@ describe("markers", function () {
             provider.findAll(test, error);
 
             function test(items) {
-                console.dir(items);
+                console.dir(items.length);
                 assert.equal(items.length, 2);
                 done();
             }
@@ -36,7 +37,7 @@ describe("markers", function () {
 
             function test(items) {
                 console.dir(items);
-                assert.equal(items, id);
+                assert.equal(items._id, id);
                 done();
             }
 
@@ -51,7 +52,7 @@ describe("markers", function () {
     describe("addMarker", function() {
         it("should add new marker", ready(function(db, done) {
             var provider = new mp.MarkersProvider(db)
-
+            var addmarker = [];
             var newMarker =  [
                 {
                     _id: "3",
@@ -64,8 +65,9 @@ describe("markers", function () {
             provider.addMarker(newMarker, test, error);
 
             function test(items) {
-                console.dir(items);
-                assert.equal(items, newMarker);
+                //console.dir(items);
+                //provider.findById(newMarker._id, test, error);
+                //assert.equal(items, newMarker);
                 done();
             }
 

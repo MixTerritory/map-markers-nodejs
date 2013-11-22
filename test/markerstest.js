@@ -52,7 +52,7 @@ describe("markers", function () {
     describe("addMarker", function() {
         it("should add new marker", ready(function(db, done) {
             var provider = new mp.MarkersProvider(db)
-            var addmarker = [];
+
             var newMarker =  [
                 {
                     _id: "3",
@@ -65,9 +65,8 @@ describe("markers", function () {
             provider.addMarker(newMarker, test, error);
 
             function test(items) {
-                //console.dir(items);
-                //provider.findById(newMarker._id, test, error);
-                //assert.equal(items, newMarker);
+                console.dir(items);
+                assert.equal(items, newMarker[0]);
                 done();
             }
 

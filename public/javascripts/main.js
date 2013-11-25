@@ -20,7 +20,7 @@ function mainMarkers () {
         jsonData = msg;
         for (var i = 0, length = jsonData.result.length; i < length; i++) {
             var data = jsonData.result[i],
-                latLng = new google.maps.LatLng(data.lat, data.lng);
+                latLng = new google.maps.LatLng(data.loc.lat, data.loc.lng);
 
             var marker = new google.maps.Marker({ position: latLng, map: map, title: data.name });
             markers.push(marker);
@@ -57,15 +57,24 @@ function addMarker() {
             markers[i].setMap(map);
         }
         var markerCount = $('#markersList option').length;
+        var newMarkerData = JSON.stringify({
+            "name": "Marker-"+markerCount,
+            "loc" : {
+                "lat": parseFloat(latAdd),
+                "lng": parseFloat(lngAdd)
+            }
+        });
+
         $.ajax({
             dataType: "json",
             type: "POST",
             url: "/markers",
-            data: "lat="+latAdd+"&lng="+lngAdd+"&name=Marker-"+markerCount
+            contentType: "application/json; charset=utf-8",
+            data: newMarkerData //"lat="+latAdd+"&lng="+lngAdd+"&name=Marker-"+markerCount
         })
         .done(function( msg ) {
             refreshMarkers();
-            alert ("Marker"+markerCount+" added");
+            alert ("Marker-"+markerCount+" added");
         });
     } else {
         alert ("Lat and Lng should not be empty.");
@@ -88,10 +97,10 @@ function searchMarkerById(){
             for (var i = 0; i < markers.length; i++) {
                 markers[i].setMap(null);
             }
-            var latLng = new google.maps.LatLng(msg.result.lat, msg.result.lng);
+            var latLng = new google.maps.LatLng(msg.result.loc.lat, msg.result.loc.lng);
 
             var marker = new google.maps.Marker({ position: latLng, map: map, title: msg.result.name });
-            map.setCenter(new google.maps.LatLng(msg.result.lat, msg.result.lng));
+            map.setCenter(new google.maps.LatLng(msg.result.loc.lat, msg.result.loc.lng));
             markers.push(marker);
 
         });
@@ -107,7 +116,7 @@ function searchMarkerById(){
                 }
                 for (var i = 0, length = msg.result.length; i < length; i++) {
                     var data = msg.result[i],
-                        latLng = new google.maps.LatLng(data.lat, data.lng);
+                        latLng = new google.maps.LatLng(data.loc.lat, data.loc.lng);
 
                     var marker = new google.maps.Marker({ position: latLng, map: map, title: data.name });
                     markers.push(marker);

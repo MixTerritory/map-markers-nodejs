@@ -4,6 +4,7 @@
 
 var express = require('express');
 var markers = require('./custom/markers');
+var indexes = require('./custom/createIndex');
 var http = require('http');
 var path = require('path');
 
@@ -26,8 +27,6 @@ db.open(function(err, db) {
     });
 });
 
-
-
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
@@ -49,7 +48,10 @@ app.get('/', function (req,res){
 //markers API routes
 app.get('/markers', markers.findAll);
 app.get('/markers/:id', markers.findById);
+app.get('/markers/near/lat/:lat/lng/:lng', markers.findByLocation);
+app.get('/markers/create/indexes', indexes.createIndexes);
 app.post('/markers', markers.addMarker);
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

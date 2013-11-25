@@ -19,7 +19,7 @@ exports.findById = function(req, res) {
 };
 
 exports.findAll = function(req, res) {
-
+    console.log(module);
     var provider = new Markers.MarkersProvider(db);
     console.log('find all markers');
     provider.findAll(function(item) {
@@ -38,6 +38,26 @@ exports.addMarker = function(req, res) {
 
     var provider = new Markers.MarkersProvider(db);
     provider.addMarker(marker, function(item) {
+        helpers.sendResponse(item, res);
+    }, function(msg, err) {
+        console.log(err);
+        helpers.sendError(400, section + msg, response);
+    });
+
+}
+
+exports.findByLocation = function(req, res) {
+    var lat = req.params.lat;
+    var lng = req.params.lng;
+
+    var dist =  parseFloat(200);
+
+    console.log('find by location - lat, lng: ' + lat + ', ' + lng);
+
+    if(!lat && !lng) return helpers.sendError(400, "Marker is unknown", res);
+
+    var provider = new Markers.MarkersProvider(db);
+    provider.findByLocation(lat, lng, dist, function(item) {
         helpers.sendResponse(item, res);
     }, function(msg, err) {
         console.log(err);

@@ -17,6 +17,7 @@
                         <input id="lng" type="hidden" name="lng" value=""/>
                         <div class="map-filed"><input id="new-marker-latlng" class="new-marker-latlng" type="text" name="add-marker" value="" readonly /></div>
                         <div class="map-button"><input type="button" name="add-marker-btn" onclick= "addMarker();" value="Add Marker" /></div>
+                         <div class="map-button"><input type="button" name="add-marker-btn" onclick= "searchNearBy();" value="Search near by" /></div>
                     </form>
                 </div>
                 <div class="map-tools">
@@ -26,7 +27,7 @@
                                 <option value="0">All markers</option>
                             </select>
                         </div>
-                        <div class="map-button"><input type="button" onclick="searchMarkerById();" name="search-marker-btn" value="Search Marker" /></div>
+                        <div class="map-button"><input type="button" onclick="searchMarkerById();" name="search-marker-btn" value="Find marker" /></div>
                     </form>
                 </div>
             </div>

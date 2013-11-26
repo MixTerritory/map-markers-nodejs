@@ -59,21 +59,11 @@ MarkersProvider.prototype.findByLocation = function (lat, lng, dist, success, fa
     success = (typeof success === 'function' ? success : func);
     fail = (typeof fail === 'function' ? fail : func);
 
+    dist = dist / 111.12;
     this.getCollection(function (collection) {
-            console.log("lat - " + lat  );
-            console.log("lng - " + lng  );
-            console.log("dist - " + dist  );
-            //var markersQuery = { loc: { $near:[lng, lat], $maxDistance: dist }};
-            var markersQuery = { loc: { $geoWithin : { $center : [ [lng, lat ] , 10000 ]} }};
-            console.log("query - " + JSON.stringify(markersQuery));
-            collection.find(markersQuery, function(err, result) {
-                if(err) {
-                    return fail('error: find by location', err);
-                }
-                result.toArray(function(err, items) {
+            collection.find({ loc: { $near:[lng, lat], $maxDistance: dist }}).toArray(function(err, items) {
                     success(items);
                 });
-            });
         },
         fail);
 };

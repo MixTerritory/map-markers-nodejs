@@ -60,8 +60,8 @@ function addMarker() {
         var newMarkerData = JSON.stringify({
             "name": "Marker-"+markerCount,
             "loc" : {
-                "lat": parseFloat(latAdd),
-                "lng": parseFloat(lngAdd)
+                "lng": parseFloat(lngAdd),
+                "lat": parseFloat(latAdd)
             }
         });
 
@@ -125,6 +125,35 @@ function searchMarkerById(){
                 map.setCenter(new google.maps.LatLng(lat, lng));
             });
     }
+}
+
+function searchNearBy(){
+    var latAdd = $("#lat").val();
+    var lngAdd = $("#lng").val();
+
+    if(tempMarker.length > 0){
+        tempMarker[0].setMap(null);
+        tempMarker = [];
+    }
+    $.ajax({
+        dataType: "json",
+        type: "GET",
+        url: "/markers/near/lat/"+latAdd+"/lng/"+lngAdd
+    })
+        .done(function( msg ) {
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(null);
+            }
+
+            for (var i = 0, length = msg.result.length; i < length; i++) {
+                var data = msg.result[i],
+                    latLng = new google.maps.LatLng(data.loc.lat, data.loc.lng);
+
+                var marker = new google.maps.Marker({ position: latLng, map: map, title: data.name });
+                markers.push(marker);
+
+            }
+        });
 }
 
 function refreshMarkers(){

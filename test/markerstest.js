@@ -49,16 +49,42 @@ describe("markers", function () {
         }));
     });
 
+    describe("findByLocation", function() {
+        it("should return near by markers", ready(function(db, done) {
+            var provider = new mp.MarkersProvider(db)
+            var lng= parseFloat(30.509);
+            var lat= parseFloat(50.471);
+            var dist= parseFloat(20);
+
+
+            provider.findByLocation(lat, lng, dist, test, error);
+
+            function test(items) {
+                console.dir(items);
+                assert.equal(items.length, 1);
+                done();
+            }
+
+            function error(msg, err) {
+                console.log(msg);
+                console.dir(err);
+                done(err);
+            }
+        }));
+    });
+
     describe("addMarker", function() {
         it("should add new marker", ready(function(db, done) {
             var provider = new mp.MarkersProvider(db)
 
             var newMarker =  [
                 {
-                    _id: "3",
-                    name: "Marker-3-test",
-                    lat: "53.51911",
-                    lng: "34.52744"
+                    "_id": "3",
+                    "name": "Marker-3-test",
+                    "loc": {
+                        "lng": 34.52744,
+                        "lat": 53.51911
+                    }
                 }
             ];
 
@@ -66,7 +92,7 @@ describe("markers", function () {
 
             function test(items) {
                 console.dir(items);
-                assert.equal(items, newMarker[0]);
+                assert.equal(items, newMarker);
                 done();
             }
 

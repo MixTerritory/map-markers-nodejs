@@ -12,16 +12,18 @@ exports.populateMarkers = function() {
 
         var markers = [
             {
-                _id: 1,
                 name: "Marker-1",
-                lat: "50.51911",
-                lng: "30.52744"
+                loc: {
+                    lng: 30.509033203125,
+                    lat: 50.47149085139956
+                }
             },
             {
-                _id: 2,
                 name: "Marker-2",
-                lat: "49.44911",
-                lng: "32.05744"
+                loc: {
+                    lng: 32.047119140625,
+                    lat: 49.468124067331644
+                }
             }];
 
         db.collection('markers', function(err, collection) {

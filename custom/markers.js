@@ -50,14 +50,15 @@ exports.findByLocation = function(req, res) {
     var lat = req.params.lat;
     var lng = req.params.lng;
 
-    var dist =  parseFloat(200);
+    // max distance for near by placed markers (km)
+    var dist = 20;
 
     console.log('find by location - lat, lng: ' + lat + ', ' + lng);
 
     if(!lat && !lng) return helpers.sendError(400, "Marker is unknown", res);
 
     var provider = new Markers.MarkersProvider(db);
-    provider.findByLocation(lat, lng, dist, function(item) {
+    provider.findByLocation(parseFloat(lat), parseFloat(lng), parseFloat(dist), function(item) {
         helpers.sendResponse(item, res);
     }, function(msg, err) {
         console.log(err);

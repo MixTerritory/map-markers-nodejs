@@ -28,6 +28,8 @@ Cписок необходимого ПО
 * PostGis
 * PL/Proxy
 * PgBouncer
+* php_mongo
+* pdo_pgsql
 ```
 
 Рекомендуемые настройки Nginx
@@ -113,16 +115,36 @@ server {
 ```
 
 5. Для создания таблиц запускаем команду: `php migrate` (при запросе - пишем `yes`)
-6. Устанвливаем  
-7. 
+6. Устанавливаем настройки для авторизацию через соцсети в `common/config/main-local.php`
+```
+'authClientCollection' => [
+            'class' => 'yii\authclient\Collection',
+            'clients' => [
+                'vkontakte' => [
+                    'class' => 'yii\authclient\clients\VKontakte',
+                    'clientId' => '',
+                    'clientSecret' => '',
+                ],
+                'facebook' => [
+                    'class' => 'yii\authclient\clients\Facebook',
+                    'clientId' => '',
+                    'clientSecret' => '',
+                ],
+                'google' => [
+                    'class' => 'yii\authclient\clients\GoogleOAuth',
+                    'clientId' => '',
+                    'clientSecret' => '',
+                ],
+            ],
+        ],
+```
+7. Необходимо поменять `frontendUrl` и `backendUrl` в `common/config/params-local.php` для связи ссылок из фронтенда к админке и наоборот.
+8. Так же в `common/config/params-local.php` меняем настройки для Amazon S3
 
 ```
-params-local    
-    'hostName' => 'http://yach.com/',
     'frontendUrl' => 'http://yach.com/',
     'backendUrl' => 'http://admin.yach.com/',
     's3_key' => '',
     's3_secret' => '',
     's3_bucket' => '',
-    's3_url' => 'https://sailty-staging.s3.eu-central-1.amazonaws.com/',
 ```    
